@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiaomi Pad 6 Rooting Guide</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1A73E8;
+            text-align: center;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        ul, ol {
+            margin: 20px 0;
+        }
+        a {
+            color: #1A73E8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Complete Guide: Rooting Xiaomi Pad 6 Using Kitsune Magisk</h1>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Xiaomi Pad 6 (HyperOS or MIUI)</li>
+        <li>A computer with <a href="https://developer.android.com/studio/releases/platform-tools" target="_blank">ADB and Fastboot</a> installed</li>
+        <li><a href="https://en.miui.com/unlock/" target="_blank">Mi Unlock Tool</a></li>
+        <li>USB cable (good quality)</li>
+        <li>Kitsune Magisk APK: <a href="https://github.com/HuskyDG/download/raw/main/magisk/26.4-kitsune.apk" target="_blank">Download Kitsune Magisk</a></li>
+        <li>Boot image (`boot.img`) file extracted from the Fastboot ROM or OTA update</li>
+        <li>OTA Extractor Tool: <a href="https://objects.githubusercontent.com/github-production-release-asset-2e65be/243619898/db5d6c1b-478d-42bc-bb9e-4e4cf8a0aeca?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20241003%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241003T060922Z&X-Amz-Expires=300&X-Amz-Signature=808fa41af1a9f48d93400ec9c0e5e525df028acdf326dbc245e6edf83ff0443a&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dandroid-ota-extractor-v1.1-windows-amd64.zip&response-content-type=application%2Foctet-stream" target="_blank">Download OTA Extractor</a></li>
+    </ul>
+
+    <h2>1. Unlocking the Bootloader</h2>
+    <ol>
+        <li>Enable Developer Options: Go to <strong>Settings</strong> > <strong>About Tablet</strong>, tap <strong>MIUI Version</strong> or <strong>HyperOS Version</strong> 7 times.</li>
+        <li>Enable <strong>OEM Unlocking</strong> and <strong>USB Debugging</strong> in Developer Options.</li>
+        <li>Link your <strong>Mi Account</strong> under <strong>Mi Unlock Status</strong>.</li>
+        <li>Boot into Fastboot Mode: Power off, hold <strong>Volume Down + Power</strong>.</li>
+        <li>Use Mi Unlock Tool to unlock the bootloader. Connect the device and click <strong>Unlock</strong>. This process may involve a waiting period.</li>
+        <li>Reboot the device (all data will be erased).</li>
+    </ol>
+
+    <h2>2. Identifying and Downloading the Correct Boot Image</h2>
+    <p>To patch the boot image using Kitsune Magisk, you need to download the correct boot image that matches your device's firmware.</p>
+    <ol>
+        <li>Check your current MIUI/HyperOS version in <strong>Settings</strong> > <strong>About Tablet</strong>.</li>
+        <li>Download the Fastboot ROM that matches your version from the <a href="https://xiaomifirmwareupdater.com/" target="_blank">Xiaomi Firmware Updater</a> or the <a href="https://en.miui.com/download.html" target="_blank">official MIUI/HyperOS download page</a>.</li>
+        <li>Extract the ROM and locate the <code>boot.img</code> file in the <strong>images</strong> folder.</li>
+    </ol>
+
+    <h3>Alternative Method: Extract Boot Image from OTA Update</h3>
+    <ol>
+        <li>Download the OTA update file if available.</li>
+        <li>Use the OTA Payload Extractor tool. Drag the <code>payload.bin</code> file from the OTA update onto the tool's executable file to extract the contents.</li>
+        <li>Locate the extracted <code>boot.img</code> in the output folder.</li>
+    </ol>
+
+    <h2>3. Patching the Boot Image Using Kitsune Magisk</h2>
+    <ol>
+        <li>Transfer the <code>boot.img</code> file to your Xiaomi Pad 6.</li>
+        <li>Open the Kitsune Magisk app on your tablet.</li>
+        <li>Tap <strong>Install</strong> → <strong>Select and Patch a File</strong>.</li>
+        <li>Choose the <code>boot.img</code> file and wait for the patching process to complete.</li>
+        <li>The patched image will be saved as <code>magisk_patched.img</code> in your Downloads folder.</li>
+    </ol>
+
+    <h2>4. Flashing the Patched Boot Image Using Fastboot</h2>
+    <ol>
+        <li>Reboot your device into Fastboot Mode by holding <strong>Volume Down + Power</strong>.</li>
+        <li>Connect your device to your PC.</li>
+        <li>Open a command prompt or terminal in the directory where ADB and Fastboot are installed.</li>
+        <li>Verify your device is connected:
+            <pre>fastboot devices</pre>
+        </li>
+        <li>Flash the patched boot image using the following command:
+            <pre>fastboot flash boot magisk_patched.img</pre>
+        </li>
+        <li>Reboot your device with:
+            <pre>fastboot reboot</pre>
+        </li>
+    </ol>
+
+    <h2>5. Verifying Root Access</h2>
+    <ol>
+        <li>Once the device reboots, open the Kitsune Magisk app.</li>
+        <li>The app should show that your device is rooted.</li>
+        <li>Optionally, install a root-checking app like <strong>Root Checker</strong> from the Play Store to confirm root status.</li>
+    </ol>
+
+    <h3>Troubleshooting and Important Notes</h3>
+    <ul>
+        <li>If you encounter a boot loop, reboot into Fastboot and flash the original <code>boot.img</code> from the ROM.</li>
+        <li>Make sure you flashed the correct patched boot image that matches your firmware.</li>
+        <li>Ensure that USB Debugging is enabled and you have the correct drivers installed if ADB doesn't recognize your device.</li>
+        <li>Back up important data before proceeding with unlocking and flashing.</li>
+    </ul>
+
+    <h3>Summary</h3>
+    <p>Unlock the bootloader using Mi Unlock Tool, identify and download the correct boot image, patch it with Kitsune Magisk, and flash it via Fastboot to gain root access. Always make backups, as this process will erase your device.</p>
+
+    <footer>
+        Guide and website made by: rmux
+    </footer>
+</div>
+
+</body>
+                                                 </html>
